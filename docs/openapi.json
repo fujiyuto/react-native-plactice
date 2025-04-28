@@ -1,0 +1,1335 @@
+{
+  "openapi": "3.0.0",
+  "info":{
+    "title": "筋トレ記録アプリAPI",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Contact Name",
+      "email": "contact@example.com",
+      "url": "https://example.com/"
+    }
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Userデータ"
+    },
+    {
+        "name": "Training Record",
+        "description": "Training Recordデータ"
+    },
+    {
+        "name": "Training Menu",
+        "description": "Training Menuデータ"
+    }
+  ],
+  "paths": {
+    "/users": {
+        "post": {
+            "operationId": "createUser",
+            "summary": "会員登録",
+            "tags": [ "User" ],
+            "parameters": [],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/UserCreateRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserCreateResponse"
+                }
+            }
+        }
+    },
+    "/users/{user_id}": {
+        "get": {
+            "operationId": "getUser",
+            "summary": "会員詳細取得",
+            "tags": [ "User" ],
+            "parameters": [
+                {"$ref": "#/components/parameters/UserIdParam"}
+            ],
+            "responses": {
+            "200": {
+                "description": "OK",
+                "$ref": "#/components/responses/UserDetailGetResponse"
+            }
+            }
+        },
+        "patch": {
+            "operationId": "editUser",
+            "summary": "会員情報編集",
+            "tags": [ "User" ],
+            "parameters": [],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/UserEditRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserEditResponse"
+                }
+            }
+        },
+        "delete": {
+            "operationId": "deleteUser",
+            "summary": "会員退会",
+            "tags": [ "User" ],
+            "parameters": [],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "headers": {
+                        "Location": {
+                            "$ref": "#/components/headers/UserDeleteResponseHeader"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "/users/{user_id}/password": {
+        "get": {
+            "operationId": "sendEditUserPasswordMailRequest",
+            "summary": "パスワード変更メール送信",
+            "tags": [ "User" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/SendUserPasswordEditMailResponse"
+                }
+            }
+        },
+        "patch": {
+            "operationId": "editUserPassword",
+            "summary": "パスワード変更",
+            "tags": [ "User" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/UserPasswordEditRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserPasswordEditResponse"
+                }
+            }
+        }
+    },
+    "/users/{user_id}/email": {
+        "get": {
+            "operationId": "editUserEmail",
+            "summary": "メールアドレス更新リクエスト",
+            "tags": [ "User" ],
+            "parameters": [
+                {"$ref": "#/components/parameters/EmailEditTokenQuery"}
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserEmailEditResponse"
+                }
+            }
+        },
+        "post": {
+            "operationId": "sendEditUserEmailMailRequest",
+            "summary": "メールアドレス更新",
+            "tags": [ "User" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/SendUserEmailEditMailRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/SendUserEmailEditMailResponse"
+                }
+            }
+        }
+    },
+    "/users/login": {
+        "post": {
+            "operationId": "login",
+            "summary": "ログイン",
+            "tags": [ "User" ],
+            "parameters": [],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/UserLoginRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserLoginResponse"
+                }
+            }
+        }
+    },
+    "/users/logout": {
+        "get": {
+            "operationId": "logout",
+            "summary": "ログアウト",
+            "tags": [ "User" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "headers": {
+                        "Location": {
+                            "$ref": "#/components/headers/LogoutResponseHeader"
+                        }
+                    }
+                }
+            } 
+        }
+    },
+    "/training_records": {
+        "get": {
+            "operationId": "getTrainingRecords",
+            "summary": "トレーニング記録一覧取得",
+            "tags": [ "Training Record" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [],
+            "responses": {
+                "200": {
+                    "description": "0K",
+                    "$ref": "#/components/responses/TrainingRecordsGetResponse"
+                }
+            }
+        },
+        "post": {
+            "operationId": "createTrainingRecord",
+            "summary": "トレーニング記録作成",
+            "tags": [ "Training Record" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/TrainingRecordsCreateRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/TrainingRecordsCreateResponse"
+                }
+            }
+        },
+        "patch": {
+            "operationId": "editTrainingRecord",
+            "summary": "トレーニング記録編集",
+            "tags": [ "Training Record" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [],
+            "requestBody": {
+                "$ref": "#/components/requestBodies/TrainingRecordsEditRequest"
+            },
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/TrainingRecordsEditResponse"
+                }
+            }
+        }
+    },
+    "/training_records/{training_record_id}": {
+        "delete": {
+            "operationId": "deleteTrainingRecords",
+            "summary": "トレーニング記録削除",
+            "tags": [ "Training Record" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/TrainingRecordsCreateResponse"
+                }
+            }
+        }
+    },
+    "/training_menus": {
+        "get": {
+            "operationId": "getTrainingMenus",
+            "summary": "トレーニングメニュー一覧取得",
+            "tags": [ "Training Menu" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "parameters": [],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/TrainingMenusGetResponse"
+                }
+            }
+        }
+    },
+    "/training_menus/{training_menu_id}": {
+        "get": {
+            "operationId": "getTrainingMenu",
+            "summary": "トレーニングメニュー詳細取得",
+            "tags": [ "Training Menu" ],
+            "security": [
+                {
+                    "BearerAuth": []
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/TrainingMenuGetResponse"
+                }
+            }
+        }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+        "BearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+        }
+    },
+    "schemas": {
+        "CommonSuccess": {
+            "description": "共通成功レスポンス",
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "description": "成功メッセージ",
+                    "example": "OK"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
+        "UserEditInfo": {
+            "description": "会員情報編集時の情報",
+            "type": "object",
+            "properties": {
+                "userName": {
+                    "type": "string",
+                    "description": "ユーザー名"
+                },
+                "lastName": {
+                    "type": "string",
+                    "description": "姓"
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "名"
+                },
+                "sex": {
+                    "type": "string",
+                    "description": "性別（1:男性, 2:女性）",
+                    "enum": [
+                        "1",
+                        "2"
+                    ]
+                },
+                "phoneNumber": {
+                    "type": "string",
+                    "description": "電話番号"
+                },
+                "bodyWeight": {
+                    "type": "number",
+                    "description": "体重"
+                },
+                "bodyHeight": {
+                    "type": "number",
+                    "description": "身長"
+                },
+                "birthday": {
+                    "type": "string",
+                    "description": "生年月日"
+                }
+            },
+            "required": [
+                "userName",
+                "lastName",
+                "firstName",
+                "sex",
+                "phoneNumber",
+                "bodyWeight",
+                "bodyHeight",
+                "birthday"
+            ]
+        },
+        "GetTrainingRecordListItem": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer",
+                    "description": "トレーニング記録ID"
+                },
+                "trainingDate": {
+                    "type": "string",
+                    "description": "トレーニング日",
+                    "format": "date"
+                },
+                "trainingTime": {
+                    "type": "string",
+                    "description": "トレーニング時間",
+                    "format": "time"
+                },
+                "trainingMenu": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer",
+                            "description": "トレーニングメニューID"
+                        },
+                        "label": {
+                            "type": "string",
+                            "description": "トレーニングメニュー名"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "label"
+                    ]
+                },
+                "repetitions": {
+                    "type": "integer",
+                    "description": "回数"
+                },
+                "weight": {
+                    "type": "number",
+                    "description": "重量"
+                }
+            },
+            "required": [
+                "id",
+                "trainingDate",
+                "trainingTime",
+                "trainingMenu",
+                "repetitions",
+                "weight"
+            ]
+        },
+        "BodyPartItem": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string",
+                    "description": "部位名"
+                },
+                "bodyPartId": {
+                    "type": "integer",
+                    "description": "部位ID"
+                },
+                "menus": {
+                    "type": "array",
+                    "description": "トレーニングメニューデータの配列",
+                    "items": {
+                        "$ref": "#/components/schemas/TrainingMenuItem"
+                    }
+                }
+            },
+            "required": [
+                "label",
+                "bodyPartId",
+                "menus"
+            ]
+        },
+        "TrainingMenuItem": {
+            "type": "object",
+            "properties": {
+                "trainingMenuId": {
+                    "type": "integer",
+                    "description": "トレーニングメニューID"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "トレーニング名"
+                }
+            },
+            "required": [
+                "trainingMenuId",
+                "name"
+            ]
+        }
+    },
+    "parameters": {
+        "UserIdParam": {
+            "description": "会員ID",
+            "name": "user_id",
+            "in": "path",
+            "schema": {
+                "type": "integer"
+            },
+            "required": true
+        },
+        "EmailEditTokenQuery": {
+            "description": "メールアドレス更新トークン",
+            "name": "token",
+            "in": "query",
+            "schema": {
+                "type": "string"
+            },
+            "example": "fjdijfaiufji43t098ti0t0jrgjr[90g",
+            "required": true
+        }
+    },
+    "requestBodies": {
+        "UserCreateRequest": {
+            "description": "会員登録リクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "ユーザー名"
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "パスワード"
+                            },
+                            "passwordConfirm": {
+                                "type": "string",
+                                "description": "パスワード（確認用）"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "メールアドレス"
+                            },
+                            "lastName": {
+                                "type": "string",
+                                "description": "姓"
+                            },
+                            "firstName": {
+                                "type": "string",
+                                "description": "名"
+                            },
+                            "sex": {
+                                "type": "string",
+                                "description": "性別（1:男性, 2:女性）",
+                                "enum": [
+                                    "1",
+                                    "2"
+                                ]
+                            },
+                            "phoneNumber": {
+                                "type": "string",
+                                "description": "電話番号"
+                            },
+                            "bodyWeight": {
+                                "type": "number",
+                                "description": "体重"
+                            },
+                            "bodyHeight": {
+                                "type": "number",
+                                "description": "身長"
+                            },
+                            "birthday": {
+                                "type": "string",
+                                "description": "生年月日"
+                            }
+                        },
+                        "required": [
+                            "userName",
+                            "password",
+                            "passwordConfirm",
+                            "email",
+                            "lastName",
+                            "firstName",
+                            "sex",
+                            "phoneNumber",
+                            "bodyWeight",
+                            "bodyHeight",
+                            "birthday"
+                        ]
+                    }
+                }
+            }
+        },
+        "UserEditRequest": {
+            "description": "会員情報編集リクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/UserEditInfo"
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserEditRequestExample"
+                        }
+                    }
+                }
+            }
+        },
+        "UserLoginRequest": {
+            "description": "ログインリクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "ユーザー名"
+                            },
+                            "password": {
+                                "type": "string",
+                                "description": "パスワード"
+                            }
+                        },
+                        "required": [
+                            "userName",
+                            "password"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserLoginRequestExample"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingRecordsCreateRequest": {
+            "description": "トレーニング記録作成リクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "trainingDate": {
+                                "type": "string",
+                                "description": "トレーニング日",
+                                "format": "date"
+                            },
+                            "trainingTime": {
+                                "type": "string",
+                                "description": "トレーニング時間",
+                                "format": "time"
+                            },
+                            "trainingMenu": {
+                                "type": "integer",
+                                "description": "トレーニングメニューID"
+                            },
+                            "repetitions": {
+                                "type": "integer",
+                                "description": "回数"
+                            },
+                            "weight": {
+                                "type": "number",
+                                "description": "重量"
+                            }
+                        },
+                        "required": [
+                            "trainingDate",
+                            "trainingTime",
+                            "trainingMenu",
+                            "repetitions",
+                            "weight"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingRecordsCreateRequestExample"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingRecordsEditRequest": {
+            "description": "トレーニング記録編集リクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "trainingDate": {
+                                "type": "string",
+                                "description": "トレーニング日",
+                                "format": "date"
+                            },
+                            "trainingTime": {
+                                "type": "string",
+                                "description": "トレーニング時間",
+                                "format": "time"
+                            },
+                            "trainingMenu": {
+                                "type": "integer",
+                                "description": "トレーニングメニューID"
+                            },
+                            "repetitions": {
+                                "type": "integer",
+                                "description": "回数"
+                            },
+                            "weight": {
+                                "type": "number",
+                                "description": "重量"
+                            }
+                        },
+                        "required": [
+                            "trainingDate",
+                            "trainingTime",
+                            "trainingMenu",
+                            "repetitions",
+                            "weight"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingRecordsEditRequestExample"
+                        }
+                    }
+                }
+            }
+        },
+        "UserPasswordEditRequest": {
+            "description": "会員パスワード変更リクエスト",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "password": {
+                                "type": "string",
+                                "description": "パスワード"
+                            },
+                            "passwordConfirm": {
+                                "type": "string",
+                                "description": "パスワード（確認用）"
+                            }
+                        },
+                        "required": [
+                            "password",
+                            "passwordConfirm"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserPasswordEditRequestExample"
+                        }
+                    }
+                }
+            }
+        },
+        "SendUserEmailEditMailRequest": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "newEmail": {
+                                "type": "string",
+                                "description": "新しいメールアドレス"
+                            }
+                        },
+                        "required": [
+                            "newEmail"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/SendUserEmailEditRequestExample"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "headers": {
+        "UserDeleteResponseHeader": {
+            "description": "退会処理後にホーム画面にリダイレクトする",
+            "schema": {
+                "type": "string",
+                "format": "url",
+                "example": "http://localhost:3000/home"
+            }
+        },
+        "LogoutResponseHeader": {
+            "description": "ログアウト後にログイン画面にリダイレクトする",
+            "schema": {
+                "type": "string",
+                "format": "url",
+                "example": "http://localhost:3000/login"
+            }
+        }
+    },
+    "responses": {
+        "UserCreateResponse": {
+            "description": "会員登録レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        },
+        "UserDetailGetResponse": {
+            "description": "会員詳細取得",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "userName": {
+                                "type": "string",
+                                "description": "ユーザー名"
+                            },
+                            "email": {
+                                "type": "string",
+                                "description": "メールアドレス"
+                            },
+                            "lastName": {
+                                "type": "string",
+                                "description": "姓"
+                            },
+                            "firstName": {
+                                "type": "string",
+                                "description": "名"
+                            },
+                            "sex": {
+                                "type": "string",
+                                "description": "性別（1:男性, 2:女性）",
+                                "enum": [
+                                    "1",
+                                    "2"
+                                ]
+                            },
+                            "phoneNumber": {
+                                "type": "string",
+                                "description": "電話番号"
+                            },
+                            "bodyWeight": {
+                                "type": "number",
+                                "description": "体重"
+                            },
+                            "bodyHeight": {
+                                "type": "number",
+                                "description": "身長"
+                            },
+                            "birthday": {
+                                "type": "string",
+                                "description": "生年月日"
+                            }
+                        },
+                        "required": [
+                            "userName",
+                            "email",
+                            "lastName",
+                            "firstName",
+                            "sex",
+                            "phoneNumber",
+                            "bodyWeight",
+                            "bodyHeight",
+                            "birthday"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserDetailGetResponseExample"
+                        }
+                    } 
+                }
+            }
+        },
+        "UserEditResponse": {
+            "description": "会員情報編集レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "description": "編集後の会員情報",
+                        "$ref": "#/components/schemas/UserEditInfo"
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserEditResponseExample"
+                        }
+                    }
+                }
+            }
+        },
+        "UserLoginResponse": {
+            "description": "ログインレスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "type": "string",
+                                "description": "認証トークン"
+                            }
+                        },
+                        "required": [
+                            "token"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/UserLoginResponseExample"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingRecordsGetResponse": {
+            "description": "トレーニング記録一覧取得レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "trainingRecords": {
+                                "type": "array",
+                                "description": "トレーニング記録一覧",
+                                "items": {
+                                    "$ref": "#/components/schemas/GetTrainingRecordListItem"
+                                }
+                            }
+                        }
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingRecordsGetResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingRecordsCreateResponse": {
+            "description": "トレーニング記録作成レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        },
+        "TrainingRecordsEditResponse": {
+            "description": "トレーニング記録編集レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "trainingRecordId": {
+                                "type": "integer",
+                                "description": "トレーニング記録ID"
+                            },
+                            "trainingDate": {
+                                "type": "string",
+                                "description": "トレーニング日",
+                                "format": "date"
+                            },
+                            "trainingTime": {
+                                "type": "string",
+                                "description": "トレーニング時間",
+                                "format": "time"
+                            },
+                            "trainingMenu": {
+                                "type": "integer",
+                                "description": "トレーニングメニューID"
+                            },
+                            "repetitions": {
+                                "type": "integer",
+                                "description": "回数"
+                            },
+                            "weight": {
+                                "type": "number",
+                                "description": "重量"
+                            }
+                        },
+                        "required": [
+                            "trainingRecordId",
+                            "trainingDate",
+                            "trainingTime",
+                            "trainingMenu",
+                            "repetitions",
+                            "weight"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingRecordsEditResponseExample"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingMenusGetResponse": {
+            "description": "トレーニングメニュー一覧取得レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "trainingMenus": {
+                                "additionalProperties": {
+                                    "type": "object",
+                                    "properties": {
+                                        "label": {
+                                            "type": "string",
+                                            "description": "部位グループ名"
+                                        },
+                                        "parts": {
+                                            "type": "array",
+                                            "description": "部位データの配列",
+                                            "items": {
+                                                "$ref": "#/components/schemas/BodyPartItem"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "label",
+                                        "parts"
+                                    ]
+                                }
+                            }
+                        },
+                        "required": [
+                            "trainingMenus"
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingMenusGetResponseExample"
+                        }
+                    }
+                }
+            }
+        },
+        "TrainingMenuGetResponse": {
+            "description": "トレーニングメニュー詳細レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "allOf": [
+                            {"$ref": "#/components/schemas/TrainingMenuItem"},
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "explanation": {
+                                        "type": "string",
+                                        "description": "説明"
+                                    },
+                                    "videoUrl": {
+                                        "type": "string",
+                                        "description": "動画URL"
+                                    },
+                                    "category": {
+                                        "type": "string",
+                                        "description": "カテゴリ"
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "examples": {
+                        "1": {
+                            "$ref": "#/components/examples/TrainingMenuGetResponseExample"
+                        }
+                    }
+                }
+            }
+        },
+        "SendUserPasswordEditMailResponse": {
+            "description": "会員パスワード変更メール送信レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        },
+        "UserPasswordEditResponse": {
+            "description": "会員パスワード変更レスポンス",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        },
+        "SendUserEmailEditMailResponse": {
+            "description": "正常系",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        },
+        "UserEmailEditResponse": {
+            "description": "正常系",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "#/components/schemas/CommonSuccess"
+                    }
+                }
+            }
+        }
+    },
+    "examples": {
+        "UserDetailGetResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "userName": "test",
+                "email": "test@gmail.com",
+                "lastName": "山田",
+                "firstName": "太郎",
+                "sex": "1",
+                "phoneNumber": "090-1111-2222",
+                "bodyWeight": 60.6,
+                "bodyHeight": 170.5,
+                "birthday": "2025-01-01"
+            }
+        },
+        "UserEditRequestExample": {
+            "summary": "会員情報編集リクエストサンプル",
+            "value": {
+                "userName": "test",
+                "lastName": "山田",
+                "firstName": "太郎",
+                "sex": "1",
+                "phoneNumber": "090-1111-2222",
+                "bodyWeight": 60.6,
+                "bodyHeight": 170.5,
+                "birthday": "2025-01-01"
+            }
+        },
+        "UserEditResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "userName": "test",
+                "lastName": "山田",
+                "firstName": "太郎",
+                "sex": "1",
+                "phoneNumber": "090-1111-2222",
+                "bodyWeight": 60.6,
+                "bodyHeight": 170.5,
+                "birthday": "2025-01-01"
+            }
+        },
+        "UserLoginRequestExample": {
+            "summary": "正常系",
+            "value": {
+                "userName": "test",
+                "password": "password"
+            }
+        },
+        "UserLoginResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "token": "jdfjajfifii3jiojdfj0jda"
+            }
+        },
+        "TrainingRecordsGetResponse": {
+            "summary": "正常系",
+            "value": {
+                "trainingRecords": [
+                    {
+                        "id": 1,
+                        "trainingDate": "2025-03-01",
+                        "trainingTime": "15:00",
+                        "trainingMenu": {
+                            "id": 1,
+                            "label": "チンニング"
+                        },
+                        "repetitions": 10,
+                        "weight": 60.2
+                    },
+                    {
+                        "id": 2,
+                        "trainingDate": "2025-02-01",
+                        "trainingTime": "15:00",
+                        "trainingMenu": {
+                            "id": 2,
+                            "label": "インクラインベンチプレス"
+                        },
+                        "repetitions": 10,
+                        "weight": 35.5
+                    },
+                    {
+                        "id": 1,
+                        "trainingDate": "2025-01-01",
+                        "trainingTime": "15:00",
+                        "trainingMenu": {
+                            "id": 3,
+                            "label": "サイドレイズ"
+                        },
+                        "repetitions": 10,
+                        "weight": 10.0
+                    }
+                ]
+            }
+        },
+        "TrainingRecordsCreateRequestExample": {
+            "summary": "正常系",
+            "value": {
+                "trainingDate": "2025-01-01",
+                "trainingTime": "15:00",
+                "trainingMenu": 1,
+                "repetitions": 10,
+                "weight": 50.5
+            }
+        },
+        "TrainingRecordsEditRequestExample": {
+            "summary": "正常系",
+            "value": {
+                "trainingDate": "2025-12-25",
+                "trainingTime": "15:00",
+                "trainingMenu": 1,
+                "repetitions": 10,
+                "weight": 50.5
+            }
+        },
+        "TrainingRecordsEditResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "trainingRecordId": 1,
+                "trainingDate": "2025-12-25",
+                "trainingTime": "15:00",
+                "trainingMenu": 1,
+                "repetitions": 10,
+                "weight": 50.5
+            }
+        },
+        "TrainingMenusGetResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "trainingMenus": {
+                    "pectoral": {
+                        "label": "胸",
+                        "parts": [
+                            {
+                                "label": "大胸筋上部",
+                                "bodyPartId": 1,
+                                "menus": [
+                                    {
+                                        "trainingMenuId": 1,
+                                        "name": "インクラインベンチプレス"
+                                    },
+                                    {
+                                        "trainingMenuId": 2,
+                                        "name": "インクラインダンベルフライ",
+                                        "explanation": "大胸筋上部を鍛える種目"
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "大胸筋中部",
+                                "bodyPartId": 2,
+                                "menus": [
+                                    {
+                                        "trainingMenuId": 3,
+                                        "name": "ベンチプレス"
+                                    },
+                                    {
+                                        "trainingMenuId": 4,
+                                        "name": "ダンベルフライ"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "back": {
+                        "label": "背中",
+                        "parts": [
+                            {
+                                "label": "僧帽筋",
+                                "bodyPartId": 3,
+                                "menus": [
+                                    {
+                                        "trainingMenuId": 5,
+                                        "name": "バーベルシュラッグ"
+                                    },
+                                    {
+                                        "trainingMenuId": 6,
+                                        "name": "ダンベルシュラッグ"
+                                    }
+                                ]
+                            },
+                            {
+                                "label": "広背筋",
+                                "bodyPartId": 4,
+                                "menus": [
+                                    {
+                                        "trainingMenuId": 7,
+                                        "name": "チンニング"
+                                    },
+                                    {
+                                        "trainingMenuId": 8,
+                                        "name": "ラットプルダウン"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "TrainingMenuGetResponseExample": {
+            "summary": "正常系",
+            "value": {
+                "trainingMenuId": 1,
+                "name": "インクラインダンベルフライ",
+                "explanation": "大胸筋上部を鍛える種目です。",
+                "videoUrl": "https://youtube.com",
+                "category": "フライ系"
+            }
+        },
+        "UserPasswordEditRequestExample": {
+            "summary": "正常系",
+            "value": {
+                "password": "updatePassword",
+                "passwordConfirm": "updatePassowrd"
+            }
+        },
+        "SendUserEmailEditRequestExample": {
+            "summary": "正常系",
+            "value": {
+                "newEmail": "test@gmail.com"
+            }
+        }
+    }
+  }
+}
