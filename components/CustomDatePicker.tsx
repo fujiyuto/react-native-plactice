@@ -1,61 +1,56 @@
 import React, { useState } from 'react'
-import { Picker, PickerProps, PickerItemProps } from '@react-native-picker/picker'
-import { Sex } from '@/constants/Sex'
-import { SegmentValue, SegmentValuesForFront } from '@/types/common'
-import { View, Text, TouchableOpacity, TextInput, TouchableHighlight } from 'react-native'
+import { TextInput, TouchableHighlight, View, Text, Pressable } from 'react-native'
+import { getDateStringFromDate, getDateFromDateString } from '@/utils/FormatUtil'
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Modal from 'react-native-modal';
 
-interface CustomPickerProps {
+interface CustomDatePicker {
     value: string
     setStateFunc: React.Dispatch<React.SetStateAction<any>>
     placeholder: string
-    pickerItems: SegmentValuesForFront
 }
 
-const CustomInputPicker = ( props: CustomPickerProps ) => {
+export const CustomDatePicker = ( props: CustomDatePicker ) => {
     const { value, setStateFunc, placeholder } = props
 
-    // モーダル表示/非表示
+    // モーダル開閉
     const [modalVisible, setModalVisible] = useState<boolean>(false)
 
-    // 入力データの一時変数
-    const [tempData, setTempData] = useState<string>('')
+    // 日付データを一時的に格納する変数
+    const [tempDateData, setTempDateData] = useState<Date>(new Date())
 
-    // ピッカーのリスト作成
-    const pickerItemList = Sex.parameters.map((item: SegmentValue, index: number): React.ReactNode => {
-        return (
-            <Picker.Item
-                key={item.value}
-                label={item.label}
-                value={item.value}
-                color='#0a0a0a'
-            />
-        )
-    })
-
-    // Cancelボタンタップ時 & 背景タップ時の処理
-    const handlePressCancel = (): void => {
-        setTempData(value)
-        setModalVisible(!modalVisible)
-    }
-
-    // 入力インプット項目をクリックした時
-    const handlePressInput = (): void => {
-        // 初回入力時の未選択の場合、クリック時に選択肢の一番上を入力するように
-        if ( value === '' ) {
-            setTempData(Sex.parameters[0].value)
+    // ピッカーの値が変わる度に発火する処理
+    const handleOnChangeDate = (event: DateTimePickerEvent, date: Date | undefined): void => {
+        if ( date != undefined ) {
+            setTempDateData(date)
+        } else {
+            setTempDateData(new Date())
         }
-        setModalVisible(!modalVisible)
     }
 
     // Confirmボタンタップ時の処理
-    const handlePressConfirm = () => {
-        if ( tempData !== value ) {
-            setStateFunc(tempData)
+    const handlePressConfirm = (): void => {
+        // 状態管理で保持しているDateの値と選択したDateの値が一致するか
+        if ( getDateFromDateString(value) !== tempDateData ) {
+            // 異なるなら状態管理で保持している値を更新
+            setStateFunc(getDateStringFromDate(tempDateData))
         }
         setModalVisible(!modalVisible)
     }
-    
+
+    // Cancelボタンタップ時 & 背景タップ時の処理
+    const handlePressCancel = (): void => {
+        // 変更した日付の一時データを戻す
+        if ( value !== '' ) {
+            setTempDateData(getDateFromDateString(value))
+        } else {
+            setTempDateData(new Date())
+        }
+
+        // モーダルの開閉
+        setModalVisible(!modalVisible)
+    }
+
     return (
         <View>
             <TextInput
@@ -63,11 +58,10 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                 placeholder={placeholder}
                 placeholderTextColor='#a3a3a3'
                 readOnly={true}
-                value={Sex.getLabelByValue(value)}
-                onPress={handlePressInput}
+                value={value}
+                onPress={() => setModalVisible(!modalVisible)}
             />
-            
-            <Modal 
+            <Modal
                 isVisible={modalVisible}
                 style={{
                     justifyContent: 'flex-end',
@@ -78,14 +72,16 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                 onBackdropPress={handlePressCancel}
                 backdropOpacity={0.1}
             >
-                <View className='flex gap-2'>
-                    <View className='bg-neutral-100 rounded-3xl'>
-                        <Picker
-                            selectedValue={tempData}
-                            onValueChange={(itemValue, itemIndex) => setTempData(itemValue)}
-                        >
-                            {pickerItemList}
-                        </Picker>
+                <View className='flex gap-2 mb-4'>
+                    <View className='bg-neutral-100 rounded-3xl flex items-center'>
+                        <DateTimePicker
+                            mode='date'
+                            value={tempDateData}
+                            locale='ja-JP'
+                            display='spinner'
+                            textColor='black'
+                            onChange={handleOnChangeDate}
+                        />
                         <TouchableHighlight
                             className='bg-neutral-100 rounded-b-3xl'
                             underlayColor='#d4d4d4'
@@ -113,17 +109,5 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                 </View>
             </Modal>
         </View>
-    )
-}
-
-interface CustomSexInputProps extends Omit<CustomPickerProps,'pickerItems'> {}
-
-export const CustomSexInput = ( props: CustomSexInputProps ) => {
-
-    return (
-        <CustomInputPicker
-            pickerItems={Sex}
-            {...props}
-        />
     )
 }

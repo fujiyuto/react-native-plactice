@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, useColorScheme, TextInput } from "react-native";
+import { StyleSheet, Text, View, Button, useColorScheme, TextInput, Modal, Pressable } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { CustomActionButton } from "@/components/CustomButton";
 import { useState } from "react";
 import { CustomTextInput, PasswordInput, NameInput } from "@/components/CustomTextInput";
-import { CustomPicker } from "@/components/CustomPicker";
+import { CustomSexInput } from "@/components/CustomPicker";
+import { CustomDatePicker } from "@/components/CustomDatePicker";
 
 export default function Create() {
 	const router = useRouter()
@@ -32,37 +33,58 @@ export default function Create() {
 	// 体重
 	const [bodyWeight, setBodyWeight] = useState<number>(0.0)
 
+	// ユーザー登録フック
 	const handleUserCreate = () => {}
+
     return (
         <View
 			className="mx-auto w-5/6 h-full flex justify-center items-center"
 		>
             <View className="w-full my-3 flex-col gap-4">
 				<CustomTextInput
-					handleOnChangeText={(text: string): void => setUserName(text)}
+					handleOnChangeText={setUserName}
 					placeholder="ユーザー名"
 					textContentType="username"
 				/>
 				<CustomTextInput
-					handleOnChangeText={(text: string): void => setEmail(text)}
+					handleOnChangeText={setEmail}
 					placeholder="メールアドレス"
 					textContentType="emailAddress"
 				/>
 				<PasswordInput
-					handleOnChangeText={(text: string): void => setPassword(text)}
+					handleOnChangeText={setPassword}
 					placeholder="パスワード"
 				/>
 				<NameInput
-					handleChangeLastName={(text: string): void => setLastName(text)}
-					handleChangeFirstName={(text: string): void => setFirstName(text)}
+					handleChangeLastName={setLastName}
+					handleChangeFirstName={setFirstName}
 				/>
-				<CustomPicker/>
+				<CustomDatePicker
+					value={birthday}
+					setStateFunc={setBirthday}
+					placeholder="生年月日"
+				/>
+				<CustomSexInput
+					value={sex}
+					setStateFunc={setSex}
+					placeholder="性別"
+				/>
 				<CustomTextInput
-					handleOnChangeText={(text: string): void => setPhoneNumber(text)}
+					handleOnChangeText={setPhoneNumber}
 					placeholder="電話番号"
 					textContentType="telephoneNumber"
 				/>
-				
+				<CustomTextInput
+					handleOnChangeText={setBodyHeight}
+					placeholder="身長"
+					textContentType="telephoneNumber"
+				/>
+				<CustomTextInput
+					handleOnChangeText={setBodyWeight}
+					placeholder="体重"
+					textContentType="telephoneNumber"
+				/>
+
 			</View>
 			<CustomActionButton
 				handleOnPress={() => router.navigate('/home/user/create')}

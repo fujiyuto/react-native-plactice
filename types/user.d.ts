@@ -6,12 +6,6 @@ export interface Name {
     firstName: string
 }
 
-// 区分値に使用
-export interface SegmentValue {
-    label: string
-    value: string
-}
-
 //===== User =====//
 // User詳細取得レスポンス
 export interface UserDetailResponse {

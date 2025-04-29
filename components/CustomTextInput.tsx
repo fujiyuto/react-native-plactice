@@ -3,7 +3,7 @@ import { TextInput, TextInputProps, TouchableOpacity, View } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface CustomTextInputProps extends TextInputProps {
-    handleOnChangeText: (text: string) => void
+    handleOnChangeText: React.Dispatch<React.SetStateAction<any>>
 }
 
 // ベースのテキスト入力用
@@ -12,7 +12,7 @@ export const CustomTextInput = ({ handleOnChangeText, ...props }: CustomTextInpu
     return (
         <TextInput
             className="h-14 w-full p-2 border-b border-neutral-300"
-            onChangeText={handleOnChangeText}
+            onChangeText={(text: string): void => handleOnChangeText(text)}
             placeholderTextColor='#a3a3a3'
             {...props}
         />
@@ -62,10 +62,11 @@ export const PasswordInput = ( { handleOnChangeText, ...props }: CustomTextInput
 }
 
 interface NameInputProps extends Omit<CustomTextInputProps, 'handleOnChangeText'> {
-    handleChangeLastName: (text: string) => void
-    handleChangeFirstName: (text: string) => void
+    handleChangeLastName: React.Dispatch<React.SetStateAction<string>>
+    handleChangeFirstName: React.Dispatch<React.SetStateAction<string>>
 }
 
+// 名前入力用
 export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...props }: NameInputProps ) => {
     return (
         <View className="flex flex-row">
@@ -75,7 +76,7 @@ export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...pro
                     textContentType="familyName"
                     placeholder="姓"
                     placeholderTextColor='#a3a3a3'
-                    onChangeText={handleChangeLastName}
+                    onChangeText={(text: string): void => handleChangeLastName(text)}
                 />
             </View>
             <View className="w-1/2 pl-[8]">
@@ -84,9 +85,11 @@ export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...pro
                     textContentType="name"
                     placeholder="名"
                     placeholderTextColor='#a3a3a3'
-                    onChangeText={handleChangeFirstName}
+                    onChangeText={(text: string): void => handleChangeFirstName(text)}
                 />
             </View>
         </View>
     )
 }
+
+// 数値入力用
