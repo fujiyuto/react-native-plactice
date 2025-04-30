@@ -1,16 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, useColorScheme, TextInput, Modal, Pressable } from "react-native";
+import { KeyboardAvoidingView, ScrollView, TextInput, View, StyleSheet, Platform, Text } from "react-native";
 import { Link, useRouter } from "expo-router";
 import { CustomActionButton } from "@/components/CustomButton";
 import { useState } from "react";
 import { CustomTextInput, PasswordInput, NameInput } from "@/components/CustomTextInput";
 import { CustomSexInput } from "@/components/CustomPicker";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
+import { Title } from "@/components/Title";
 
 export default function Create() {
 	const router = useRouter()
-
-	const [open, setOpen] = useState<boolean>(false)  // 生年月日のdate-picker用
 
 	// ユーザー名
 	const [userName, setUserName] = useState<string>('')
@@ -37,62 +36,114 @@ export default function Create() {
 	const handleUserCreate = () => {}
 
     return (
-        <View
-			className="mx-auto w-5/6 h-full flex justify-center items-center"
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={{flex: 1, justifyContent: 'space-between'}}
+			keyboardVerticalOffset={110}
 		>
-            <View className="w-full my-3 flex-col gap-4">
-				<CustomTextInput
-					handleOnChangeText={setUserName}
-					placeholder="ユーザー名"
-					textContentType="username"
-				/>
-				<CustomTextInput
-					handleOnChangeText={setEmail}
-					placeholder="メールアドレス"
-					textContentType="emailAddress"
-				/>
-				<PasswordInput
-					handleOnChangeText={setPassword}
-					placeholder="パスワード"
-				/>
-				<NameInput
-					handleChangeLastName={setLastName}
-					handleChangeFirstName={setFirstName}
-				/>
-				<CustomDatePicker
-					value={birthday}
-					setStateFunc={setBirthday}
-					placeholder="生年月日"
-				/>
-				<CustomSexInput
-					value={sex}
-					setStateFunc={setSex}
-					placeholder="性別"
-				/>
-				<CustomTextInput
-					handleOnChangeText={setPhoneNumber}
-					placeholder="電話番号"
-					textContentType="telephoneNumber"
-				/>
-				<CustomTextInput
-					handleOnChangeText={setBodyHeight}
-					placeholder="身長"
-					textContentType="telephoneNumber"
-				/>
-				<CustomTextInput
-					handleOnChangeText={setBodyWeight}
-					placeholder="体重"
-					textContentType="telephoneNumber"
-				/>
-
-			</View>
-			<CustomActionButton
-				handleOnPress={() => router.navigate('/home/user/create')}
-				bgColor="bg-sky-300"
-				label="新規登録"
-			/>
-        </View>
+			<ScrollView>
+				<View className="w-5/6 mx-auto h-full flex items-around gap-16 pt-8 pb-52">
+					
+					<View className="h-fit flex-col gap-4">
+						<View>
+							<Title
+								label="会員情報入力"
+							/>
+						</View>
+						<View className="w-full h-full flex-col justify-around gap-6">
+							<CustomTextInput
+								handleOnChangeText={setUserName}
+								placeholder="ユーザー名"
+								textContentType="username"
+								keyboardType="ascii-capable"
+								returnKeyType="done"
+							/>
+							<CustomTextInput
+								handleOnChangeText={setEmail}
+								placeholder="メールアドレス"
+								textContentType="emailAddress"
+								keyboardType="email-address"
+								returnKeyType="done"
+							/>
+							<PasswordInput
+								handleOnChangeText={setPassword}
+								placeholder="パスワード"
+								keyboardType="ascii-capable"
+								returnKeyType="done"
+							/>
+							<NameInput
+								handleChangeLastName={setLastName}
+								handleChangeFirstName={setFirstName}
+								returnKeyType="done"
+							/>
+							<CustomDatePicker
+								value={birthday}
+								setStateFunc={setBirthday}
+								placeholder="生年月日"
+							/>
+							<CustomSexInput
+								value={sex}
+								setStateFunc={setSex}
+								placeholder="性別"
+							/>
+							<CustomTextInput
+								handleOnChangeText={setPhoneNumber}
+								placeholder="電話番号"
+								textContentType="telephoneNumber"
+								keyboardType="number-pad"
+								returnKeyType="done"
+							/>
+							<CustomTextInput
+								handleOnChangeText={setBodyHeight}
+								placeholder="身長"
+								keyboardType="decimal-pad"
+								returnKeyType="done"
+							/>
+							<CustomTextInput
+								handleOnChangeText={setBodyWeight}
+								placeholder="体重"
+								keyboardType="decimal-pad"
+								returnKeyType="done"
+							/>
+							
+						</View>
+					</View>
+					{/* <View>
+						
+					</View> */}
+					<CustomActionButton
+						handleOnPress={() => router.navigate('/home/user/create')}
+						bgColor="bg-sky-300"
+						label="新規登録"
+					/>
+				</View>
+			</ScrollView>
+		</KeyboardAvoidingView>
     );
 }
 
+const styles = StyleSheet.create({
+	container: {
+	  flex: 1,
+	},
+	inner: {
+		padding: 24,
+	  	flex: 1,
+	  	justifyContent: 'space-around'
+	},
+	header: {
+	  fontSize: 36,
+	  marginBottom: 48,
+	},
+	textInput: {
+	  height: 40,
+	  borderColor: '#000000',
+	  borderBottomWidth: 1,
+	  marginBottom: 36,
+	},
+	btnContainer: {
+	  backgroundColor: 'white',
+	  marginTop: 12,
+	},
+  });
 

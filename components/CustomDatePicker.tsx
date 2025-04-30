@@ -60,6 +60,7 @@ export const CustomDatePicker = ( props: CustomDatePicker ) => {
                 readOnly={true}
                 value={value}
                 onPress={() => setModalVisible(!modalVisible)}
+                textContentType='birthdate'
             />
             <Modal
                 isVisible={modalVisible}
@@ -69,7 +70,6 @@ export const CustomDatePicker = ( props: CustomDatePicker ) => {
                     marginHorizontal: 8,
                     borderRadius: 30
                 }}
-                onBackdropPress={handlePressCancel}
                 backdropOpacity={0.1}
             >
                 <View className='flex gap-2 mb-4'>

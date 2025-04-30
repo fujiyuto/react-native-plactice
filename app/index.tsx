@@ -1,6 +1,8 @@
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, View, StyleSheet, TouchableWithoutFeedback, Keyboard, TextInput, Button, Text } from "react-native";
 import { useRouter } from "expo-router";
 import { CustomActionButton } from "@/components/CustomButton";
+import React from "react";
+import { CustomTextInput } from "@/components/CustomTextInput";
 
 export default function Index() {
 	const router = useRouter()
@@ -26,7 +28,9 @@ export default function Index() {
 					label="ホーム"
 				/>
 			</View>
+			
         </View>
     );
 }
+
 

@@ -13,7 +13,7 @@ interface CustomPickerProps {
 }
 
 const CustomInputPicker = ( props: CustomPickerProps ) => {
-    const { value, setStateFunc, placeholder } = props
+    const { value, setStateFunc, placeholder, pickerItems } = props
 
     // モーダル表示/非表示
     const [modalVisible, setModalVisible] = useState<boolean>(false)
@@ -22,7 +22,7 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
     const [tempData, setTempData] = useState<string>('')
 
     // ピッカーのリスト作成
-    const pickerItemList = Sex.parameters.map((item: SegmentValue, index: number): React.ReactNode => {
+    const pickerItemList = pickerItems.parameters.map((item: SegmentValue, index: number): React.ReactNode => {
         return (
             <Picker.Item
                 key={item.value}
@@ -43,7 +43,7 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
     const handlePressInput = (): void => {
         // 初回入力時の未選択の場合、クリック時に選択肢の一番上を入力するように
         if ( value === '' ) {
-            setTempData(Sex.parameters[0].value)
+            setTempData(pickerItems.parameters[0].value)
         }
         setModalVisible(!modalVisible)
     }
@@ -63,7 +63,7 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                 placeholder={placeholder}
                 placeholderTextColor='#a3a3a3'
                 readOnly={true}
-                value={Sex.getLabelByValue(value)}
+                value={pickerItems.getLabelByValue(value)}
                 onPress={handlePressInput}
             />
             
@@ -75,7 +75,6 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                     marginHorizontal: 8,
                     borderRadius: 30
                 }}
-                onBackdropPress={handlePressCancel}
                 backdropOpacity={0.1}
             >
                 <View className='flex gap-2'>
@@ -95,7 +94,9 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                             }}
                             activeOpacity={0.7}
                         >
-                            <Text className='text-[#007AFF] text-2xl py-4 tracking-wider text-center'>Confirm</Text>
+                            <Text 
+                                className='text-[#007AFF] text-2xl py-4 tracking-wider text-center'
+                            >Confirm</Text>
                         </TouchableHighlight>
                     </View>
                     <TouchableHighlight 
@@ -108,7 +109,9 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                             backgroundColor: 'white'
                         }}
                     >
-                        <Text className='text-[#007AFF] font-semibold bg-white text-2xl rounded-xl py-4 tracking-wider text-center'>Cancel</Text>
+                        <Text 
+                            className='text-[#007AFF] font-semibold bg-white text-2xl rounded-xl py-4 tracking-wider text-center'
+                        >Cancel</Text>
                     </TouchableHighlight>
                 </View>
             </Modal>
@@ -116,6 +119,7 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
     )
 }
 
+// 性別入力
 interface CustomSexInputProps extends Omit<CustomPickerProps,'pickerItems'> {}
 
 export const CustomSexInput = ( props: CustomSexInputProps ) => {

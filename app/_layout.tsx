@@ -15,41 +15,41 @@ export default function RootLayout({ children }: {children: React.ReactNode}) {
     // const contentBGColor: string = colorScheme === 'dark' ? '#0a0a0a' : '#fff'
 
     return (
-        <View className="absolute top-0 left-0 right-0 bottom-0 bg-sky-300 z-10">
-            <SafeAreaView className={safeAreaColor}>
-                <Stack
-                    screenOptions={{
-                        headerTintColor: '#7d7d7d',
-                        headerTitleStyle: {
-                            fontWeight: 'bold'
-                        },
-                        // headerStyle: {
-                        //     backgroundColor: headerBGColor
-                        // },
-                        contentStyle: {
-                            backgroundColor: contentBGColor
-                        },
-                        headerShown: false,
-                        
+        <SafeAreaView className={safeAreaColor}>
+            <Stack
+                screenOptions={{
+                    headerTintColor: '#7d7d7d',
+                    headerTitleStyle: {
+                        fontWeight: 'bold'
+                    },
+                    // headerStyle: {
+                    //     backgroundColor: headerBGColor
+                    // },
+                    contentStyle: {
+                        backgroundColor: contentBGColor,
+                        flex: 1
+                    },
+                    headerShown: false,
+                    
+                }}
+            >
+                
+                <Stack.Screen 
+                    name="index" 
+                    options={{ 
+                        title: 'トップ'
                     }}
-                >
-                    
-                    <Stack.Screen 
-                        name="index" 
-                        options={{ 
-                            title: 'トップ'
-                        }}
-                    />
-                    <Stack.Screen 
-                        name="home" 
-                        options={{ 
-                            title: 'ホーム',
-                            headerShown: false
-                        }}
-                    />
-                    
-                </Stack>
-            </SafeAreaView>
-        </View>
+                />
+                <Stack.Screen 
+                    name="home" 
+                    options={{ 
+                        title: 'ホーム',
+                        headerShown: false
+                    }}
+                />
+                
+            </Stack>
+        </SafeAreaView>
+        
     )
 }

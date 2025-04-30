@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { TextInput, TextInputProps, TouchableOpacity, View } from "react-native"
+import { TextInput, TextInputProps, TouchableOpacity, View, Text, TouchableWithoutFeedback, KeyboardAvoidingView, Keyboard, Platform } from "react-native"
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface CustomTextInputProps extends TextInputProps {
@@ -7,7 +7,7 @@ interface CustomTextInputProps extends TextInputProps {
 }
 
 // ベースのテキスト入力用
-export const CustomTextInput = ({ handleOnChangeText, ...props }: CustomTextInputProps ) => {
+export const CustomTextInput = ( { handleOnChangeText, ...props }: CustomTextInputProps ) => {
 
     return (
         <TextInput
@@ -77,6 +77,7 @@ export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...pro
                     placeholder="姓"
                     placeholderTextColor='#a3a3a3'
                     onChangeText={(text: string): void => handleChangeLastName(text)}
+                    {...props}
                 />
             </View>
             <View className="w-1/2 pl-[8]">
@@ -86,10 +87,9 @@ export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...pro
                     placeholder="名"
                     placeholderTextColor='#a3a3a3'
                     onChangeText={(text: string): void => handleChangeFirstName(text)}
+                    {...props}
                 />
             </View>
         </View>
     )
 }
-
-// 数値入力用
