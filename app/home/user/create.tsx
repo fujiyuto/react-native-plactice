@@ -32,8 +32,10 @@ export default function Create() {
 	// 体重
 	const [bodyWeight, setBodyWeight] = useState<number>(0.0)
 
-	// ユーザー登録フック
-	const handleUserCreate = () => {}
+	// 新規登録処理
+	const handleUserCreate = () => {
+
+	}
 
     return (
 		<KeyboardAvoidingView
@@ -43,7 +45,6 @@ export default function Create() {
 		>
 			<ScrollView>
 				<View className="w-5/6 mx-auto h-full flex items-around gap-16 pt-8 pb-52">
-					
 					<View className="h-fit flex-col gap-4">
 						<View>
 							<Title
@@ -108,11 +109,8 @@ export default function Create() {
 							
 						</View>
 					</View>
-					{/* <View>
-						
-					</View> */}
 					<CustomActionButton
-						handleOnPress={() => router.navigate('/home/user/create')}
+						handleOnPress={handleUserCreate}
 						bgColor="bg-sky-300"
 						label="新規登録"
 					/>
@@ -121,29 +119,3 @@ export default function Create() {
 		</KeyboardAvoidingView>
     );
 }
-
-const styles = StyleSheet.create({
-	container: {
-	  flex: 1,
-	},
-	inner: {
-		padding: 24,
-	  	flex: 1,
-	  	justifyContent: 'space-around'
-	},
-	header: {
-	  fontSize: 36,
-	  marginBottom: 48,
-	},
-	textInput: {
-	  height: 40,
-	  borderColor: '#000000',
-	  borderBottomWidth: 1,
-	  marginBottom: 36,
-	},
-	btnContainer: {
-	  backgroundColor: 'white',
-	  marginTop: 12,
-	},
-  });
-

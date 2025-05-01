@@ -22,9 +22,6 @@ export default function RootLayout({ children }: {children: React.ReactNode}) {
                     headerTitleStyle: {
                         fontWeight: 'bold'
                     },
-                    // headerStyle: {
-                    //     backgroundColor: headerBGColor
-                    // },
                     contentStyle: {
                         backgroundColor: contentBGColor,
                         flex: 1

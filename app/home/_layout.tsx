@@ -55,7 +55,21 @@ export default function HomeLayout({ children }: {children: React.ReactNode}) {
                                 onPress={() => router.back()}
                                 className="pl-2"
                             >
-                                <Text className="text-2xl text-neutral-600">{'<'}</Text>
+                                <Text className="text-2xl text-neutral-600">←</Text>
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: ''
+                    }}
+                />
+                <Stack.Screen 
+                    name="user/login" 
+                    options={{
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                onPress={() => router.back()}
+                                className="pl-2"
+                            >
+                                <Text className="text-2xl text-neutral-600">←</Text>
                             </TouchableOpacity>
                         ),
                         headerTitle: ''
