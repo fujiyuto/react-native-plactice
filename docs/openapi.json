@@ -50,10 +50,10 @@
                 {"$ref": "#/components/parameters/UserIdParam"}
             ],
             "responses": {
-            "200": {
-                "description": "OK",
-                "$ref": "#/components/responses/UserDetailGetResponse"
-            }
+                "200": {
+                    "description": "OK",
+                    "$ref": "#/components/responses/UserDetailGetResponse"
+                }
             }
         },
         "patch": {
@@ -346,13 +346,9 @@
                     "type": "string",
                     "description": "ユーザー名"
                 },
-                "lastName": {
-                    "type": "string",
-                    "description": "姓"
-                },
-                "firstName": {
-                    "type": "string",
-                    "description": "名"
+                "name": {
+                    "$ref": "#/components/schemas/Name",
+                    "description": "名前"
                 },
                 "sex": {
                     "type": "string",
@@ -381,8 +377,7 @@
             },
             "required": [
                 "userName",
-                "lastName",
-                "firstName",
+                "name",
                 "sex",
                 "phoneNumber",
                 "bodyWeight",
@@ -483,6 +478,19 @@
                 "trainingMenuId",
                 "name"
             ]
+        },
+        "Name": {
+            "type": "object",
+            "properties": {
+                "lastName": {
+                    "type": "string",
+                    "description": "名前（姓）"
+                },
+                "firstName": {
+                    "type": "string",
+                    "description": "名前（名）"
+                }
+            }
         }
     },
     "parameters": {
@@ -530,13 +538,9 @@
                                 "type": "string",
                                 "description": "メールアドレス"
                             },
-                            "lastName": {
-                                "type": "string",
-                                "description": "姓"
-                            },
-                            "firstName": {
-                                "type": "string",
-                                "description": "名"
+                            "name": {
+                                "description": "名前",
+                                "$ref": "#/components/schemas/Name"
                             },
                             "sex": {
                                 "type": "string",
@@ -568,8 +572,7 @@
                             "password",
                             "passwordConfirm",
                             "email",
-                            "lastName",
-                            "firstName",
+                            "name",
                             "sex",
                             "phoneNumber",
                             "bodyWeight",
@@ -813,13 +816,9 @@
                                 "type": "string",
                                 "description": "メールアドレス"
                             },
-                            "lastName": {
-                                "type": "string",
-                                "description": "姓"
-                            },
-                            "firstName": {
-                                "type": "string",
-                                "description": "名"
+                            "name": {
+                                "$ref": "#/components/schemas/Name",
+                                "description": "名前"
                             },
                             "sex": {
                                 "type": "string",
@@ -849,8 +848,7 @@
                         "required": [
                             "userName",
                             "email",
-                            "lastName",
-                            "firstName",
+                            "name",
                             "sex",
                             "phoneNumber",
                             "bodyWeight",
@@ -1114,8 +1112,10 @@
             "value": {
                 "userName": "test",
                 "email": "test@gmail.com",
-                "lastName": "山田",
-                "firstName": "太郎",
+                "name": {
+                    "lastName": "山田",
+                    "firstName": "太郎"
+                },
                 "sex": "1",
                 "phoneNumber": "090-1111-2222",
                 "bodyWeight": 60.6,
@@ -1127,8 +1127,10 @@
             "summary": "会員情報編集リクエストサンプル",
             "value": {
                 "userName": "test",
-                "lastName": "山田",
-                "firstName": "太郎",
+                "name": {
+                    "lastName": "山田",
+                    "firstName": "太郎"
+                },
                 "sex": "1",
                 "phoneNumber": "090-1111-2222",
                 "bodyWeight": 60.6,
@@ -1140,8 +1142,10 @@
             "summary": "正常系",
             "value": {
                 "userName": "test",
-                "lastName": "山田",
-                "firstName": "太郎",
+                "name": {
+                    "lastName": "山田",
+                    "firstName": "太郎"
+                },
                 "sex": "1",
                 "phoneNumber": "090-1111-2222",
                 "bodyWeight": 60.6,

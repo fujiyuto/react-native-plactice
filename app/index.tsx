@@ -27,6 +27,16 @@ export default function Index() {
 					bgColor="bg-neutral-300"
 					label="ホーム"
 				/>
+				<CustomActionButton
+					handleOnPress={() => router.navigate('/home/user/forgotPwd')}
+					bgColor="bg-neutral-300"
+					label="パスワード忘れ"
+				/>
+				<CustomActionButton
+					handleOnPress={() => router.navigate('/home/user/test')}
+					bgColor="bg-neutral-300"
+					label="会員情報"
+				/>
 			</View>
 			
         </View>

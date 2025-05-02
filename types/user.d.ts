@@ -27,7 +27,7 @@ export interface UserCreateRequest {
     passwordConfirm: string
     name: Name
     birthday: string
-    sex: SegmentValue
+    sex: string
     phoneNumber: string
     bodyHeight: number
     bodyWeight: number
@@ -40,9 +40,8 @@ export interface UserCreateResponse implements MessageResponse {}
 export interface UserEditRequest {
     userName: string
     name: Name
-    sex: SegmentValue
+    sex: string
     birthday: string
-    sex: SegmentValue
     phoneNumber: string
     bodyHeight: number
     bodyWeight: number

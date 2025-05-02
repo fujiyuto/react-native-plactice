@@ -64,14 +64,17 @@ export const PasswordInput = ( { handleOnChangeText, ...props }: CustomTextInput
 interface NameInputProps extends Omit<CustomTextInputProps, 'handleOnChangeText'> {
     handleChangeLastName: React.Dispatch<React.SetStateAction<string>>
     handleChangeFirstName: React.Dispatch<React.SetStateAction<string>>
+    lastNameValue: string
+    firstNameValue: string
 }
 
 // 名前入力用
-export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...props }: NameInputProps ) => {
+export const NameInput = ( { handleChangeLastName, handleChangeFirstName, lastNameValue, firstNameValue, ...props }: NameInputProps ) => {
     return (
         <View className="flex flex-row">
             <View className="w-1/2 pr-[8]">
                 <TextInput
+                    value={lastNameValue}
                     className="h-14 p-2 border-b border-neutral-300"
                     textContentType="familyName"
                     placeholder="姓"
@@ -82,6 +85,7 @@ export const NameInput = ( { handleChangeLastName, handleChangeFirstName, ...pro
             </View>
             <View className="w-1/2 pl-[8]">
                 <TextInput
+                    value={firstNameValue}
                     className="h-14 p-2 border-b border-neutral-300"
                     textContentType="name"
                     placeholder="名"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { TextInput, TouchableHighlight, View, Text, Pressable } from 'react-native'
+import { TextInput, TouchableHighlight, View, Text } from 'react-native'
 import { getDateStringFromDate, getDateFromDateString } from '@/utils/FormatUtil'
 import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import Modal from 'react-native-modal';
@@ -71,6 +71,7 @@ export const CustomDatePicker = ( props: CustomDatePicker ) => {
                     borderRadius: 30
                 }}
                 backdropOpacity={0.1}
+                useNativeDriver
             >
                 <View className='flex gap-2 mb-4'>
                     <View className='bg-neutral-100 rounded-3xl flex items-center'>

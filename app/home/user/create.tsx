@@ -1,22 +1,22 @@
 import React from "react";
-import { KeyboardAvoidingView, ScrollView, TextInput, View, StyleSheet, Platform, Text } from "react-native";
-import { Link, useRouter } from "expo-router";
+import { KeyboardAvoidingView, ScrollView, View, Platform} from "react-native";
 import { CustomActionButton } from "@/components/CustomButton";
 import { useState } from "react";
 import { CustomTextInput, PasswordInput, NameInput } from "@/components/CustomTextInput";
 import { CustomSexInput } from "@/components/CustomPicker";
 import { CustomDatePicker } from "@/components/CustomDatePicker";
 import { Title } from "@/components/Title";
+import { UserCreateRequest } from "@/types/user";
 
 export default function Create() {
-	const router = useRouter()
-
 	// ユーザー名
 	const [userName, setUserName] = useState<string>('')
 	// メールアドレス
 	const [email, setEmail] = useState<string>('')
 	// パスワード
 	const [password, setPassword] = useState<string>('')
+	// パスワード（確認用）
+	const [passwordConfirm, setPasswordConfirm] = useState<string>('')
 	// 姓
 	const [lastName, setLastName] = useState<string>('')
 	// 名
@@ -28,13 +28,27 @@ export default function Create() {
 	// 電話番号
 	const [phoneNumber, setPhoneNumber] = useState<string>('')
 	// 身長
-	const [bodyHeight, setBodyHeight] = useState<number>(0.0)
+	const [bodyHeight, setBodyHeight] = useState<string>('')
 	// 体重
-	const [bodyWeight, setBodyWeight] = useState<number>(0.0)
+	const [bodyWeight, setBodyWeight] = useState<string>('')
 
 	// 新規登録処理
 	const handleUserCreate = () => {
-
+		const formData: UserCreateRequest = {
+			userName,
+			password,
+			passwordConfirm,
+			email,
+			name: {
+				lastName,
+				firstName
+			},
+			birthday,
+			sex,
+			phoneNumber,
+			bodyHeight: Number(bodyHeight),
+			bodyWeight: Number(bodyWeight)
+		}
 	}
 
     return (
@@ -53,6 +67,7 @@ export default function Create() {
 						</View>
 						<View className="w-full h-full flex-col justify-around gap-6">
 							<CustomTextInput
+								value={userName}
 								handleOnChangeText={setUserName}
 								placeholder="ユーザー名"
 								textContentType="username"
@@ -60,6 +75,7 @@ export default function Create() {
 								returnKeyType="done"
 							/>
 							<CustomTextInput
+								value={email}
 								handleOnChangeText={setEmail}
 								placeholder="メールアドレス"
 								textContentType="emailAddress"
@@ -67,8 +83,16 @@ export default function Create() {
 								returnKeyType="done"
 							/>
 							<PasswordInput
+								value={password}
 								handleOnChangeText={setPassword}
 								placeholder="パスワード"
+								keyboardType="ascii-capable"
+								returnKeyType="done"
+							/>
+							<PasswordInput
+								value={passwordConfirm}
+								handleOnChangeText={setPasswordConfirm}
+								placeholder="パスワード（確認用）"
 								keyboardType="ascii-capable"
 								returnKeyType="done"
 							/>
@@ -76,6 +100,8 @@ export default function Create() {
 								handleChangeLastName={setLastName}
 								handleChangeFirstName={setFirstName}
 								returnKeyType="done"
+								lastNameValue={lastName}
+								firstNameValue={firstName}
 							/>
 							<CustomDatePicker
 								value={birthday}
@@ -88,6 +114,7 @@ export default function Create() {
 								placeholder="性別"
 							/>
 							<CustomTextInput
+								value={phoneNumber}
 								handleOnChangeText={setPhoneNumber}
 								placeholder="電話番号"
 								textContentType="telephoneNumber"
@@ -95,12 +122,14 @@ export default function Create() {
 								returnKeyType="done"
 							/>
 							<CustomTextInput
+								value={bodyHeight}
 								handleOnChangeText={setBodyHeight}
 								placeholder="身長"
 								keyboardType="decimal-pad"
 								returnKeyType="done"
 							/>
 							<CustomTextInput
+								value={bodyWeight}
 								handleOnChangeText={setBodyWeight}
 								placeholder="体重"
 								keyboardType="decimal-pad"

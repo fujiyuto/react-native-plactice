@@ -44,6 +44,8 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
         // 初回入力時の未選択の場合、クリック時に選択肢の一番上を入力するように
         if ( value === '' ) {
             setTempData(pickerItems.parameters[0].value)
+        } else {
+            setTempData(value)
         }
         setModalVisible(!modalVisible)
     }
@@ -76,6 +78,7 @@ const CustomInputPicker = ( props: CustomPickerProps ) => {
                     borderRadius: 30
                 }}
                 backdropOpacity={0.1}
+                useNativeDriver
             >
                 <View className='flex gap-2'>
                     <View className='bg-neutral-100 rounded-3xl'>

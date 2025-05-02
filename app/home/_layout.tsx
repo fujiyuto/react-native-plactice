@@ -38,13 +38,29 @@ export default function HomeLayout({ children }: {children: React.ReactNode}) {
                 <Stack.Screen 
                     name="user/[userName]/index" 
                     options={{ 
-                        title: 'プロフィール'
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                onPress={() => router.back()}
+                                className="pl-2"
+                            >
+                                <Text className="text-3xl text-neutral-600">←</Text>
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: '会員情報'
                     }}
                 />
                 <Stack.Screen 
                     name="user/[userName]/edit" 
                     options={{ 
-                        title: 'プロフィール編集'
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                onPress={() => router.back()}
+                                className="pl-2"
+                            >
+                                <Text className="text-3xl text-neutral-600">←</Text>
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: '会員情報変更'
                     }}
                 />
                 <Stack.Screen 
@@ -55,10 +71,10 @@ export default function HomeLayout({ children }: {children: React.ReactNode}) {
                                 onPress={() => router.back()}
                                 className="pl-2"
                             >
-                                <Text className="text-2xl text-neutral-600">←</Text>
+                                <Text className="text-3xl text-neutral-600">←</Text>
                             </TouchableOpacity>
                         ),
-                        headerTitle: ''
+                        headerTitle: '新規登録'
                     }}
                 />
                 <Stack.Screen 
@@ -69,10 +85,38 @@ export default function HomeLayout({ children }: {children: React.ReactNode}) {
                                 onPress={() => router.back()}
                                 className="pl-2"
                             >
-                                <Text className="text-2xl text-neutral-600">←</Text>
+                                <Text className="text-3xl text-neutral-600">←</Text>
                             </TouchableOpacity>
                         ),
-                        headerTitle: ''
+                        headerTitle: 'ログイン'
+                    }}
+                />
+                <Stack.Screen 
+                    name="user/forgotPwd" 
+                    options={{
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                onPress={() => router.back()}
+                                className="pl-2"
+                            >
+                                <Text className="text-3xl text-neutral-600">←</Text>
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: 'パスワード変更'
+                    }}
+                />
+                <Stack.Screen 
+                    name="user/changeEmail" 
+                    options={{
+                        headerLeft: () => (
+                            <TouchableOpacity
+                                onPress={() => router.back()}
+                                className="pl-2"
+                            >
+                                <Text className="text-3xl text-neutral-600">←</Text>
+                            </TouchableOpacity>
+                        ),
+                        headerTitle: 'メールアドレス変更'
                     }}
                 />
             </Stack>
